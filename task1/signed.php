@@ -1,6 +1,6 @@
 <?php
 session_start();
-$user = $_SESSION["user"];
+$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ $user = $_SESSION["user"];
 <body>
 <div >
     <div id="box" class="w-full h-screen flex justify-center items-center flex-col">
-        <p>Welcome, <?php echo $user[0] . " " . $user[1]; ?>! </p>
+        <p>Welcome, <?= $user[0] . ' ' . $user[1]; ?>! </p>
         <a href="logout.php">Logout</a>
 </div>
 </body>

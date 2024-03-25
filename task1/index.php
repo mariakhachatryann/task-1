@@ -1,44 +1,45 @@
 <?php
-require_once "connection.php";
+require_once 'connection.php';
 ?>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $_REQUEST["signup"]) {
-    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
-    $surname = filter_input(INPUT_POST, "surname", FILTER_SANITIZE_SPECIAL_CHARS);
-    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
-    $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_REQUEST['signup']) {
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+    $surname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     $errors = array();
 
     if (empty($name) || empty($password) || empty($surname)) {
-        $errors[] = "Please fill out all fields";
+        $errors[] = 'Please fill out all fields';
     } else {
         if (strlen($password) < 8 || !preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
-            $errors[] = "Password must be at least 8 characters long and contain letters and numbers.";
+            $errors[] = 'Password must be at least 8 characters long and contain letters and numbers.';
         } else {
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO users (name, surname, email, password) VALUES (:name, :surname, :email, :password)";
                 $stmt = $connection->prepare($sql);
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':surname', $surname);
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':password', $hash);
-                $stmt->execute();
+                $stmt->execute([
+                    ':name' => $name,
+                    ':surname' => $surname,
+                    ':email' => $email,
+                    ':password' => $hash
+                ]);
 
-                $_SESSION["user"] = [$name, $surname, $email];
+                $_SESSION['user'] = [$name, $surname, $email];
 
-                header("Location: signed.php");
+                header('Location: signed.php');
                 exit();
             } catch (PDOException $e) {
-                $errors[] = "Error: " . $e->getMessage();
+                $errors[] = 'Error: ' . $e->getMessage();
             }
 
-            $_SESSION["user"] = [$name, $surname, $email];
+            $_SESSION['user'] = [$name, $surname, $email];
 
-            header("Location: signed.php");
+            header('Location: signed.php');
         }
     }
 }
@@ -156,13 +157,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_REQUEST["signup"]) {
                 <input type="password" name="password" placeholder="Password" >
             </label>
             <input type="submit" value="Sign up" name="signup" >
-            <?php
-            if (isset($errors)) {
-                foreach ($errors as $error) {
-                    echo '<div>' . $error . '</div>';
-                }
-            }
-            ?>
+
+            <?php if(isset($errors)) :?>
+                <?php foreach ($errors as $error):?>
+                    <div><?= $error ?></div>
+                <?php endforeach?>
+            <?php endif; ?>
+
         </form>
     </div>
 
