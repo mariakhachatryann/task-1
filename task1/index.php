@@ -1,11 +1,8 @@
 <?php
 require_once "connection.php";
-
 ?>
 
 <?php
-session_start();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_REQUEST["signup"]) {
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
     $surname = filter_input(INPUT_POST, "surname", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -21,8 +18,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_REQUEST["signup"]) {
             $errors[] = "Password must be at least 8 characters long and contain letters and numbers.";
         } else {
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (name, surname, email, password) VALUES ('$name', '$surname', '$email',  '$hash') ";
-            mysqli_query($connection, $sql);
+            try {
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO users (name, surname, email, password) VALUES (:name, :surname, :email, :password)";
+                $stmt = $connection->prepare($sql);
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':surname', $surname);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $hash);
+                $stmt->execute();
+
+                $_SESSION["user"] = [$name, $surname, $email];
+
+                header("Location: signed.php");
+                exit();
+            } catch (PDOException $e) {
+                $errors[] = "Error: " . $e->getMessage();
+            }
 
             $_SESSION["user"] = [$name, $surname, $email];
 
