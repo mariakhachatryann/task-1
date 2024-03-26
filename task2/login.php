@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_REQUEST['login']) {
         </label>
         <input type="submit" value="Sign up" name="login" >
 
-        <?php if(isset($errors)) :?>
+        <?php if (isset($errors)) :?>
             <?php foreach ($errors as $error):?>
                 <div class="error-message"><?= $error ?></div>
             <?php endforeach?>

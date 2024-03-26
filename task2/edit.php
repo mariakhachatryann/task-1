@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
             <textarea name="text" rows="4" cols="50"><?= htmlspecialchars($post['text']) ?></textarea><br>
         </label>
         <input type="submit" value="Update" name="update">
-        <?php if(!empty($errors)) :?>
+        <?php if (!empty($errors)) :?>
             <?php foreach ($errors as $error):?>
                 <div class="error-message"><?= $error ?></div>
             <?php endforeach?>
