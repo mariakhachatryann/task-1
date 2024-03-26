@@ -23,7 +23,7 @@ require_once 'connection.php';
         margin-top: 0;
         color: white;
         padding: 15px;
-        font-size: 20px;
+        font-size: 17px;
         cursor: pointer;
     }
 
@@ -154,12 +154,23 @@ require_once 'connection.php';
         background: #ccc;
         padding: 2px;
     }
+
+    .delete-btn {
+        margin: 20px;
+        cursor: pointer;
+        background: #ccc;
+        padding: 2px;
+        color: #e73838;
+    }
+
+    .delete-btn:hover {
+        color: red;
+    }
 </style>
 
 <header class="nav">
-    <a class="link" href="index.php">Dashboard</a>
-
     <?php if(isset($_SESSION['admin'])): ?>
+        <a class="link" href="index.php"><?= $_SESSION['admin']['username'] ?>'s  Dashboard</a>
         <div>
             <a class="link" href="index.php?action=all_posts">All posts</a>
             <a class="link" href="index.php?action=my_posts">My posts</a>
@@ -169,6 +180,7 @@ require_once 'connection.php';
             <a class="link" href="create.php">Create post</a>
         </div>
     <?php else: ?>
+        <a class="link" href="index.php">Dashboard</a>
         <a class="link" href="login.php">Log In</a>
     <?php endif; ?>
 </header>

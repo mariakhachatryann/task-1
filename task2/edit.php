@@ -3,14 +3,12 @@ require_once 'nav.php';
 
 $errors = [];
 $admin = $_SESSION['admin'];
-
 if (!isset($_GET['id'])) {
     header('Location: index.php');
     exit;
 }
 
 $postId = $_GET['id'];
-
 $stmt = $connection->prepare("SELECT * FROM posts WHERE id = :id");
 $stmt->execute([':id' => $postId]);
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -39,10 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     <p class="welcome">Welcome <?= $admin['username']; ?></p>
     <form action="edit.php?id=<?= $postId ?>" method="post">
         <p>Edit a post</p>
-        <label for="title">Title</label>
-        <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>"><br>
-        <label for="text">Text</label>
-        <textarea name="text" rows="4" cols="50"><?= htmlspecialchars($post['text']) ?></textarea><br>
+        <label for="title">Title
+            <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>"><br>
+        </label>
+        <label for="text">Text
+            <textarea name="text" rows="4" cols="50"><?= htmlspecialchars($post['text']) ?></textarea><br>
+        </label>
         <input type="submit" value="Update" name="update">
         <?php if(!empty($errors)) :?>
             <?php foreach ($errors as $error):?>

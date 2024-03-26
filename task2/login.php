@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_REQUEST['login']) {
 ?>
 
 <div id="box">
-    <form action="login.php" method="post" >
+    <form action="login.php" method="post">
         <p>Admin log in</p>
         <label for="username">
             <input type="text" name="username" placeholder="username">
@@ -44,4 +44,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_REQUEST['login']) {
         <?php endif; ?>
     </form>
 </div>
-

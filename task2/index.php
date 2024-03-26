@@ -2,14 +2,10 @@
 require_once "nav.php";
 
 if (isset($_GET['action']) && $_GET['action'] === 'my_posts' && isset($_SESSION['admin'])) {
-    $stmt = $connection->prepare(
-            "SELECT p.*, a.username FROM posts AS p JOIN admins AS a ON p.admin_id = a.id WHERE p.admin_id = :admin_id ORDER BY p.created_at DESC"
-    );
+    $stmt = $connection->prepare("SELECT p.*, a.username FROM posts AS p JOIN admins AS a ON p.admin_id = a.id WHERE p.admin_id = :admin_id ORDER BY p.created_at DESC");
     $stmt->execute([':admin_id' => $_SESSION['admin']['id']]);
 } else {
-    $stmt = $connection->prepare(
-            "SELECT p.*, a.username FROM posts AS p JOIN admins AS a ON p.admin_id = a.id ORDER BY p.created_at DESC"
-    );
+    $stmt = $connection->prepare("SELECT p.*, a.username FROM posts AS p JOIN admins AS a ON p.admin_id = a.id ORDER BY p.created_at DESC");
     $stmt->execute();
 }
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,6 +32,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <?php if(isset($_SESSION['admin']) && $_SESSION['admin']['id'] == $row['admin_id']): ?>
                     <a href="edit.php?id=<?= $row['id'] ?>" class="edit-btn">Edit Post</a>
+                    <a href="delete.php?id=<?= $row['id'] ?>" class="delete-btn">Delete Post</a>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
