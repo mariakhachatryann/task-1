@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_REQUEST['login']) {
 
         if ($row && password_verify($password, $row['password'])) {
             $_SESSION['admin'] = $row;
-            header("Location: create.php");
+            header('Location: create.php');
             exit();
         } else {
             $errors[] = 'incorrect username or password';
