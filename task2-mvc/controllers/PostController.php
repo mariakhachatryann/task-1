@@ -1,25 +1,30 @@
 <?php
 require_once '../models/PostModel.php';
 
-class PostController {
+class PostController
+{
     private $model;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->model = new PostModel();
     }
 
-    public function index() {
+    public function index()
+    {
         $posts = $this->model->getAllPosts();
         return $posts;
     }
 
-    public function create($title, $text) {
+    public function create($title, $text)
+    {
         $this->model->createPost($title, $text, $_SESSION['admin']['id']);
         header('Location: index.php');
         exit;
     }
 
-    public function delete($postId) {
+    public function delete($postId)
+    {
         if (!isset($_SESSION['admin'])) {
             header('Location: login.php');
             exit;
@@ -34,7 +39,8 @@ class PostController {
         }
     }
 
-    public function edit($postId) {
+    public function edit($postId)
+    {
         $errors = [];
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -48,4 +54,3 @@ class PostController {
         return $errors;
     }
 }
-

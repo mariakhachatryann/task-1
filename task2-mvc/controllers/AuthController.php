@@ -1,14 +1,17 @@
 <?php
 require_once '../models/AdminModel.php';
 
-class AuthController {
+class AuthController
+{
     private $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userModel = new AdminModel();
     }
 
-    public function login($username, $password) {
+    public function login($username, $password)
+    {
         $user = $this->userModel->getUserByUsername($username);
         if ($user && password_verify($password, $user['password'])) {
             session_start();
@@ -20,7 +23,8 @@ class AuthController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_start();
         session_unset();
         session_destroy();
@@ -28,4 +32,3 @@ class AuthController {
         exit;
     }
 }
-?>
