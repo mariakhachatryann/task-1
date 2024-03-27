@@ -5,7 +5,6 @@ require_once '../connection.php';
 class AdminModel
 {
     private $connection;
-
     public function __construct()
     {
         global $connection;

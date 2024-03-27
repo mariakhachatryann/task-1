@@ -14,13 +14,9 @@ class PostController {
     }
 
     public function create($title, $text) {
-        if (!empty($title) && !empty($text)) {
-            $this->model->createPost($title, $text, $_SESSION['admin']['id']);
-            header('Location: index.php');
-            exit;
-        } else {
-            $errors[] = "Fill out all fields!";
-        }
+        $this->model->createPost($title, $text, $_SESSION['admin']['id']);
+        header('Location: index.php');
+        exit;
     }
 
     public function delete($postId) {
@@ -44,7 +40,7 @@ class PostController {
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if (empty($title) || empty($text)) {
-            $errors[] = "Fill out all fields!";
+            $errors[] = 'Fill out all fields!';
         } else {
             $this->model->editPost($title, $text, $postId);
         }
