@@ -1,5 +1,5 @@
 <?php
-require_once '../nav.php';
+//require_once '../nav.php';
 require_once '../controllers/PostController.php';
 
 $controller = new PostController();

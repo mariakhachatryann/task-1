@@ -1,6 +1,4 @@
 <?php
-require_once '../models/AdminModel.php';
-
 class AuthController
 {
     private $userModel;
@@ -10,17 +8,24 @@ class AuthController
         $this->userModel = new AdminModel();
     }
 
-    public function login($username, $password)
+    public function login()
     {
-        $user = $this->userModel->getUserByUsername($username);
-        if ($user && password_verify($password, $user['password'])) {
-            session_start();
-            $_SESSION['admin'] = $user;
-            header('Location: index.php');
-            exit;
-        } else {
-            return false;
-        }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $user = $this->userModel->getUserByUsername($username);
+            if ($user && password_verify($password, $user['password'])) {
+                session_start();
+                $_SESSION['admin'] = $user;
+                header('Location: index.php');
+                exit;
+            } else {
+                return false;
+            }
+          }
+        header("Location: views/login.php");
+
     }
 
     public function logout()

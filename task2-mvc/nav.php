@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-require_once 'connection.php';
 ?>
 
 <style>
@@ -176,12 +175,12 @@ require_once 'connection.php';
             <a class="link" href="index.php?action=my_posts">My posts</a>
         </div>
         <div>
-            <a class="link" href="logout.php">Log Out</a>
-            <a class="link" href="create.php">Create post</a>
+            <a class="link" href="index.php?action=logout">Log Out</a>
+            <a class="link" href="index.php?action=create">Create post</a>
         </div>
     <?php else: ?>
         <a class="link" href="index.php">Dashboard</a>
-        <a class="link" href="login.php">Log In</a>
+        <a class="link" href="index.php?action=login">Log In</a>
     <?php endif; ?>
 </header>
 

@@ -1,5 +1,4 @@
 <?php
-require_once '../models/PostModel.php';
 
 class PostController
 {
@@ -14,6 +13,7 @@ class PostController
     {
         $posts = $this->model->getAllPosts();
         return $posts;
+//        header("Location: views/index.php");
     }
 
     public function create($title, $text)
