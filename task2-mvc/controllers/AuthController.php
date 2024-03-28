@@ -8,6 +8,11 @@ class AuthController
         $this->userModel = new AdminModel();
     }
 
+    public function loginPage()
+    {
+        require "views/login.php";
+    }
+
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
@@ -16,24 +21,21 @@ class AuthController
 
             $user = $this->userModel->getUserByUsername($username);
             if ($user && password_verify($password, $user['password'])) {
-                session_start();
                 $_SESSION['admin'] = $user;
-                header('Location: index.php');
-                exit;
+                header("Location: index.php?action=");
             } else {
-                return false;
+                $errors[] = "Invalid username or password";
+                exit;
             }
-          }
-        header("Location: views/login.php");
-
+        }
     }
 
     public function logout()
     {
-        session_start();
         session_unset();
         session_destroy();
-        header('Location: login.php');
+        session_write_close();
+        header("Location: index.php?action=");
         exit;
     }
 }

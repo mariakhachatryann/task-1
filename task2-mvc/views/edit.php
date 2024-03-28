@@ -1,34 +1,5 @@
-<?php
-require_once '../nav.php';
-require_once '../controllers/PostController.php';
-require_once '../models/PostModel.php';
-
-if (!isset($_GET['id'])) {
-    header('Location: index.php');
-    exit;
-}
-
-$postId = $_GET['id'];
-
-$controller = new PostController();
-$model = new PostModel();
-
-$post = $model->getPostById($postId);
-
-if (!$post || $post['admin_id'] !== $_SESSION['admin']['id']) {
-    header('Location: index.php');
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-    $controller->edit($postId);
-    header('Location: index.php');
-
-}
-?>
-
 <div id="box">
-    <form action="edit.php?id=<?= $postId ?>" method="post">
+    <form action="index.php?action=edit&id=<?= $postId ?>" method="post">
         <p>Edit a post</p>
         <label for="title">Title
             <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>"><br>

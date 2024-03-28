@@ -1,8 +1,3 @@
-<?php
-session_start();
-
-?>
-
 <style>
     body {
         margin: 0;
@@ -149,7 +144,7 @@ session_start();
     .edit-btn {
         margin: 20px;
         cursor: pointer;
-        color: black;
+        color: #1b9441;
         background: #ccc;
         padding: 2px;
     }
@@ -165,11 +160,41 @@ session_start();
     .delete-btn:hover {
         color: red;
     }
+
+    .see-btn {
+        margin: 20px;
+        cursor: pointer;
+        background: #ccc;
+        padding: 2px;
+        color: #35689f;
+    }
+
+    .see-btn:hover {
+        color: red;
+    }
+
+    .post-view {
+        padding: 30px;
+    }
+
+    .post-view .title {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .post-view .text {
+        line-height: 25px;
+    }
+
+    .details {
+        display: flex;
+        gap: 20px;
+    }
 </style>
 
-<header class="nav">
+<nav class="nav">
     <?php if(isset($_SESSION['admin'])): ?>
-        <a class="link" href="index.php"><?= $_SESSION['admin']['username'] ?>'s  Dashboard</a>
+        <a class="link" href="index.php?action="><?= $_SESSION['admin']['username'] ?>'s  Dashboard</a>
         <div>
             <a class="link" href="index.php?action=all_posts">All posts</a>
             <a class="link" href="index.php?action=my_posts">My posts</a>
@@ -179,8 +204,8 @@ session_start();
             <a class="link" href="index.php?action=create">Create post</a>
         </div>
     <?php else: ?>
-        <a class="link" href="index.php">Dashboard</a>
-        <a class="link" href="index.php?action=login">Log In</a>
+        <a class="link" href="index.php?action=">Dashboard</a>
+        <a class="link" href="index.php?action=loginPage">Log In</a>
     <?php endif; ?>
-</header>
+</nav>
 
