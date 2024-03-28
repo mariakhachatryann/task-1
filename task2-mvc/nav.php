@@ -1,3 +1,20 @@
+<nav class="nav">
+    <?php if(isset($_SESSION['admin'])): ?>
+        <a class="link" href="index.php?action="><?= $_SESSION['admin']['username'] ?>'s  Dashboard</a>
+        <div>
+            <a class="link" href="index.php?action=all_posts">All posts</a>
+            <a class="link" href="index.php?action=my_posts">My posts</a>
+        </div>
+        <div>
+            <a class="link" href="index.php?action=logout">Log Out</a>
+            <a class="link" href="index.php?action=create">Create post</a>
+        </div>
+    <?php else: ?>
+        <a class="link" href="index.php?action=">Dashboard</a>
+        <a class="link" href="index.php?action=loginPage">Log In</a>
+    <?php endif; ?>
+</nav>
+
 <style>
     body {
         margin: 0;
@@ -170,7 +187,7 @@
     }
 
     .see-btn:hover {
-        color: red;
+        color: #1a4e83;
     }
 
     .post-view {
@@ -191,21 +208,3 @@
         gap: 20px;
     }
 </style>
-
-<nav class="nav">
-    <?php if(isset($_SESSION['admin'])): ?>
-        <a class="link" href="index.php?action="><?= $_SESSION['admin']['username'] ?>'s  Dashboard</a>
-        <div>
-            <a class="link" href="index.php?action=all_posts">All posts</a>
-            <a class="link" href="index.php?action=my_posts">My posts</a>
-        </div>
-        <div>
-            <a class="link" href="index.php?action=logout">Log Out</a>
-            <a class="link" href="index.php?action=create">Create post</a>
-        </div>
-    <?php else: ?>
-        <a class="link" href="index.php?action=">Dashboard</a>
-        <a class="link" href="index.php?action=loginPage">Log In</a>
-    <?php endif; ?>
-</nav>
-

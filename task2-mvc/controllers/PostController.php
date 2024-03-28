@@ -1,5 +1,4 @@
 <?php
-
 class PostController
 {
     private $model;
@@ -12,8 +11,7 @@ class PostController
     public function index()
     {
         $posts = $this->model->getAllPosts();
-        require_once "views/index.php";
-
+        require_once 'views/index.php';
         return $posts;
     }
 
@@ -24,7 +22,7 @@ class PostController
             $text = $_POST['text'];
 
             if (empty($title) || empty($text)) {
-                $errors[] = "Fill out all fields!";
+                $errors[] = 'Fill out all fields!';
             } else {
                 $adminId = $_SESSION['admin']['id'];
                 $this->model->createPost($title, $text, $_SESSION['admin']['id']);
@@ -34,7 +32,7 @@ class PostController
         }
 
         $admin = $_SESSION['admin'];
-        require_once "views/create.php";
+        require_once 'views/create.php';
     }
 
     public function delete($postId)
@@ -43,21 +41,13 @@ class PostController
             header('Location: login.php');
             exit;
         }
-        if (isset($_GET['id'])) {
-            $postId = $_GET['id'];
-            $this->model->deletePost($postId);
-            header("Location: index.php?action=");
-
-        } else {
-            header('Location: index.php');
-            exit;
-        }
+        $this->model->deletePost($postId);
+        header('Location: index.php?action=');
     }
 
     public function edit($postId)
     {
         $post = $this->model->getPostById($postId);
-
         if (!$post || $post['admin_id'] !== $_SESSION['admin']['id']) {
             header('Location: index.php?action=');
             exit;
@@ -76,13 +66,14 @@ class PostController
                 exit;
             }
         } else {
-            require_once "views/edit.php";
+            require_once 'views/edit.php';
         }
     }
 
     public function view($postId)
     {
-        require_once "views/view.php";
+        $post = $this->model->getPostById($postId);
+        require_once 'views/view.php';
     }
 
 }

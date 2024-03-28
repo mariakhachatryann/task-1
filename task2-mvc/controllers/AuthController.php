@@ -10,7 +10,7 @@ class AuthController
 
     public function loginPage()
     {
-        require "views/login.php";
+        require 'views/login.php';
     }
 
     public function login()
@@ -22,9 +22,9 @@ class AuthController
             $user = $this->userModel->getUserByUsername($username);
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['admin'] = $user;
-                header("Location: index.php?action=");
+                header('Location: index.php?action=');
             } else {
-                $errors[] = "Invalid username or password";
+                $errors[] = 'Invalid username or password';
                 exit;
             }
         }
@@ -35,7 +35,7 @@ class AuthController
         session_unset();
         session_destroy();
         session_write_close();
-        header("Location: index.php?action=");
+        header('Location: index.php?action=');
         exit;
     }
 }
